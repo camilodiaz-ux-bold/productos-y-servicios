@@ -9,6 +9,7 @@ import svgCashReg from "../imports/IconFillIcSale/svg-kot07dyito";
 import svgPV from "../imports/ProductVisualizacion/svg-pi74w8qury";
 import imgSneaker from "../imports/ProductVisualizacion/f92cde031c4a218992de87f81f773a3859c8498a.png";
 import imgRectangle from "../assets/Rectangle.png";
+import iconProductosServicios from "../assets/icon-productos-servicios.svg";
 import imgCard from "../imports/Pagos-1/5a728c2f6078cde80c55091bf9f2eb0eeb24968a.png";
 import imgCard1 from "../imports/Pagos-1/bfb4d0e5d42f0a85a652d9f2b3f840dc2ef1a0a7.png";
 
@@ -481,21 +482,8 @@ function HomePaymentsPage({ onProductosYServicios, onCobrar }: { onProductosYSer
                 className="content-stretch flex flex-col gap-[8px] items-center min-w-[65px] pt-[2px] relative shrink-0 cursor-pointer"
               >
                 <div className="bg-white content-stretch flex flex-col items-center justify-center p-[4px] relative rounded-[16px] shrink-0 size-[64px]">
-                  <div className="relative shrink-0 size-[32px]">
-                    <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 32 32">
-                      <g clipPath="url(#clip_cash_home)">
-                        <path d={svgCashReg.p1b393980} fill="url(#grad_cash_home)" />
-                      </g>
-                      <defs>
-                        <linearGradient gradientUnits="userSpaceOnUse" id="grad_cash_home" x1="32" x2="-7.98412e-07" y1="16" y2="16">
-                          <stop offset="0.149063" stopColor="#FF2947" />
-                          <stop offset="0.87985" stopColor="#121E6C" />
-                        </linearGradient>
-                        <clipPath id="clip_cash_home">
-                          <rect fill="white" height="32" width="32" />
-                        </clipPath>
-                      </defs>
-                    </svg>
+                  <div className="relative shrink-0 size-[44px]">
+                    <img src={iconProductosServicios} alt="" className="absolute block inset-0 size-full" />
                   </div>
                 </div>
                 <div className="content-stretch flex flex-col gap-[2px] items-center relative shrink-0">
