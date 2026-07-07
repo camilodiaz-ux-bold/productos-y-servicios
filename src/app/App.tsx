@@ -500,12 +500,12 @@ function HomePaymentsPage({ onProductosYServicios, onCobrar }: { onProductosYSer
                 </div>
                 <div className="content-stretch flex flex-col gap-[2px] items-center relative shrink-0">
                   <div className="[word-break:break-word] font-['Montserrat:Medium',sans-serif] font-medium leading-[0] relative shrink-0 text-[#1e1e1e] text-[12px] text-center w-[79.75px] whitespace-pre-wrap">
-                    <p className="leading-[16px] mb-0">Caja</p>
-                    <p className="leading-[16px]">registradora</p>
+                    <p className="leading-[16px] mb-0">Productos</p>
+                    <p className="leading-[16px]">y servicios</p>
                   </div>
                   <div className="bg-[#ee424e] content-stretch flex items-center justify-center px-[8px] relative rounded-[100px] shrink-0">
                     <div className="[word-break:break-word] flex flex-col font-['Montserrat:SemiBold',sans-serif] font-semibold justify-center leading-[0] relative shrink-0 text-[12px] text-center text-white whitespace-nowrap">
-                      <p className="leading-[16px]">Nuevo</p>
+                      <p className="leading-[16px]">Gratis</p>
                     </div>
                   </div>
                 </div>
@@ -657,7 +657,7 @@ function HomeProductosPage({
             <div className="content-stretch flex items-start justify-between px-[12px] relative size-full">
               <BackButton onPress={onBack} />
               <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px relative self-stretch">
-                <p className="[word-break:break-word] flex-[1_0_0] font-['Montserrat:Bold',sans-serif] font-bold leading-[20px] min-w-px relative text-[#121e6c] text-[16px] text-center">Caja registradora</p>
+                <p className="[word-break:break-word] flex-[1_0_0] font-['Montserrat:Bold',sans-serif] font-bold leading-[20px] min-w-px relative text-[#121e6c] text-[16px] text-center">Productos y servicios</p>
               </div>
               <div className="relative shrink-0 size-[24px]" />
             </div>
@@ -699,29 +699,10 @@ function HomeProductosPage({
           </div>
 
           {/* ② Bloque progreso — 1/2 sin productos, 2/2 con productos */}
-          <div className="bg-white content-stretch flex flex-col gap-[16px] items-start p-[16px] relative rounded-[16px] shrink-0 w-[343px]">
-            <div className="content-stretch flex gap-[8px] items-center relative shrink-0 w-full">
-              <div className="content-stretch flex flex-[1_0_0] flex-col gap-[16px] items-start min-w-px relative">
-                <div className="[word-break:break-word] content-stretch flex flex-col gap-[8px] items-start relative shrink-0 text-[#1e1e1e] w-full">
-                  <div className="flex flex-col font-['Montserrat:Bold',sans-serif] font-bold justify-center leading-[0] relative shrink-0 text-[14px] w-full">
-                    <p className="leading-[20px]">{hasProducts ? "Cobra seleccionando tu producto" : "Crea un producto o servicio"}</p>
-                  </div>
-                  <p className="font-['Montserrat:Regular',sans-serif] font-normal leading-[16px] relative shrink-0 text-[12px] w-full">Cobra en segundos y visualiza los productos más vendidos</p>
-                </div>
-              </div>
-              <PieChart label={hasProducts ? "2/2" : "1/2"} full={hasProducts} />
-            </div>
-            <button
-              onClick={hasProducts ? onCobrar : onCreateProduct}
-              className="bg-[#f1f2f6] relative rounded-[12px] shrink-0 w-full cursor-pointer"
-            >
-              <div className="flex flex-row items-center justify-center size-full">
-                <div className="content-stretch flex gap-[8px] items-center justify-center px-[16px] py-[12px] relative size-full">
-                  <p className="[word-break:break-word] font-['Montserrat:Bold',sans-serif] font-bold leading-[20px] relative shrink-0 text-[#121e6c] text-[14px] text-center whitespace-nowrap">{hasProducts ? "Cobrar con mis productos" : "Crear producto o servicio"}</p>
-                </div>
-              </div>
-            </button>
-          </div>
+          <CompactFeedbackCard
+            hasProducts={hasProducts}
+            onAction={hasProducts ? onCobrar : onCreateProduct}
+          />
 
           {/* ③ Gestiona tus productos — section heading */}
           <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
@@ -842,7 +823,45 @@ function HomeProductosPage({
   );
 }
 
-// ─── Page 3: Tus productos ────────────────────────────────────────────────────
+// ─── Compact feedback card (APP Card / Feedback_2) ───────────────────────────
+
+function CompactFeedbackCard({
+  hasProducts,
+  onAction,
+}: {
+  hasProducts: boolean;
+  onAction: () => void;
+}) {
+  return (
+    <div className="bg-white content-stretch flex flex-col items-end p-[12px] relative rounded-[16px] shrink-0 w-full max-w-[343px]">
+      <div className="content-stretch flex flex-col gap-[8px] items-start relative shrink-0 w-full">
+        <button onClick={onAction} className="content-stretch flex gap-[8px] items-start relative shrink-0 w-full cursor-pointer text-left">
+          <p className="[word-break:break-word] flex-[1_0_0] font-['Montserrat:Bold',sans-serif] font-bold leading-[20px] min-w-px relative text-[#1e1e1e] text-[14px]">
+            {hasProducts ? "Cobra seleccionando tu producto" : "Crea tu primer producto o servicio"}
+          </p>
+          <div className="relative shrink-0 size-[20px]">
+            <svg className="absolute block inset-0 size-full" fill="none" viewBox="0 0 20 20">
+              <path d="M7.5 5l5 5-5 5" stroke="#1e1e1e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+        </button>
+        <div className="content-stretch flex gap-[8px] items-center relative shrink-0 w-full">
+          <p className="[word-break:break-word] font-['Montserrat:Regular',sans-serif] font-normal leading-[24px] relative shrink-0 text-[16px] text-[#1e1e1e] whitespace-nowrap">
+            {hasProducts ? "2/2" : "1/2"}
+          </p>
+          <div className="bg-[#f1f2f6] content-stretch flex flex-[1_0_0] h-[16px] items-center min-w-px pl-px py-px relative rounded-[100px] overflow-hidden">
+            <div
+              className={`h-full relative rounded-[100px] ${hasProducts ? "w-full" : "w-[72px]"}`}
+              style={{ backgroundImage: "linear-gradient(-90deg, #FF2947 14.906%, #121E6C 87.985%)" }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Page 3: Tus productos (Productos y servicios module) ─────────────────────
 
 function TusProductosPage({
   products,
@@ -857,7 +876,9 @@ function TusProductosPage({
   onContinueToCobro: () => void;
   onViewProduct: (p: Product) => void;
 }) {
+  const [moduleTab, setModuleTab] = useState<"catalogo" | "metricas">("catalogo");
   const hasProducts = products.some(p => !p.isExample);
+
   return (
     <div className="bg-[#f7f8fb] relative size-full">
       {/* Header */}
@@ -868,101 +889,136 @@ function TusProductosPage({
             <div className="content-stretch flex items-start justify-between px-[12px] relative size-full">
               <BackButton onPress={onBack} />
               <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px relative self-stretch">
-                <p className="[word-break:break-word] flex-[1_0_0] font-['Montserrat:Bold',sans-serif] font-bold leading-[20px] min-w-px relative text-[#121e6c] text-[16px] text-center">Tus productos</p>
+                <p className="[word-break:break-word] flex-[1_0_0] font-['Montserrat:Bold',sans-serif] font-bold leading-[20px] min-w-px relative text-[#121e6c] text-[16px] text-center">Productos y servicios</p>
               </div>
-              <div className="relative shrink-0 size-[24px]">
-                <div className="absolute inset-[15.63%_14.06%_15.62%_17.19%]">
-                  <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16.5 16.5">
-                    <path clipRule="evenodd" d={svgE1.p25dc38a0} fill="#121E6C" fillRule="evenodd" />
-                  </svg>
-                </div>
-              </div>
+              <button className="relative shrink-0 size-[24px] cursor-pointer">
+                <svg className="absolute block inset-0 size-full" fill="none" viewBox="0 0 24 24">
+                  <path fill="#121E6C" d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54A.484.484 0 0 0 14 4h-3.84c-.24 0-.43.17-.47.41l-.36 2.54a7 7 0 0 0-1.62.94l-2.39-.96a.488.488 0 0 0-.59.22L2.74 8.87a.47.47 0 0 0 .12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.47.47 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 0 0-.12-.61l-2.01-1.58zM12 15.6a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2z" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Search + Filter */}
-      <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-center left-1/2 top-[96px]">
-        <div className="content-stretch flex gap-[16px] items-center relative shrink-0 w-[343px]">
-          <div className="content-stretch flex flex-[1_0_0] flex-col items-start justify-center min-w-px relative">
-            <div className="bg-white h-[40px] relative rounded-[30px] shrink-0 w-full">
-              <div className="flex flex-row items-center size-full">
-                <div className="content-stretch flex gap-[12px] items-center pl-[12px] pr-[16px] py-[12px] relative size-full">
-                  <div className="overflow-clip relative shrink-0 size-[24px]">
-                    <div className="absolute inset-[4.17%_8.33%_6.57%_8.33%]">
-                      <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 21.4221">
-                        <path clipRule="evenodd" d={svgE1.p2ea251f0} fill="#606060" fillRule="evenodd" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="flex-[1_0_0] min-w-px relative">
-                    <div className="content-stretch flex items-start px-[4px] py-[8px] relative size-full">
-                      <div className="[word-break:break-word] flex flex-col font-['Montserrat:Light',sans-serif] font-light justify-center leading-[0] relative shrink-0 text-[#606060] text-[14px] whitespace-nowrap">
-                        <p className="leading-[20px]">Buscar ítem</p>
+      {/* Catálogo / Métricas tabs */}
+      <div className="absolute left-0 right-0 top-[76px]">
+        <div className="flex border-b border-[#e8e9f0] px-[16px]">
+          {(["catalogo", "metricas"] as const).map(tab => {
+            const active = moduleTab === tab;
+            const label = tab === "catalogo" ? "Catálogo" : "Métricas";
+            return (
+              <button
+                key={tab}
+                onClick={() => setModuleTab(tab)}
+                className="flex flex-col flex-1 items-center cursor-pointer"
+              >
+                <span className={`text-[14px] leading-[20px] text-[#121e6c] py-[2px] ${active ? "font-['Montserrat:Semibold',sans-serif] font-semibold" : "font-['Montserrat:Regular',sans-serif] font-normal"}`}>
+                  {label}
+                </span>
+                <div className={`h-[2px] w-full rounded-t-full ${active ? "bg-[#ff2947]" : "bg-transparent"}`} />
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {moduleTab === "catalogo" ? (
+        <>
+          {/* Search + Filter */}
+          <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-center left-1/2 top-[114px]">
+            <div className="content-stretch flex gap-[16px] items-center relative shrink-0 w-[343px]">
+              <div className="content-stretch flex flex-[1_0_0] flex-col items-start justify-center min-w-px relative">
+                <div className="bg-white h-[40px] relative rounded-[30px] shrink-0 w-full">
+                  <div className="flex flex-row items-center size-full">
+                    <div className="content-stretch flex gap-[12px] items-center pl-[12px] pr-[16px] py-[12px] relative size-full">
+                      <div className="overflow-clip relative shrink-0 size-[24px]">
+                        <div className="absolute inset-[4.17%_8.33%_6.57%_8.33%]">
+                          <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 21.4221">
+                            <path clipRule="evenodd" d={svgE1.p2ea251f0} fill="#606060" fillRule="evenodd" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="flex-[1_0_0] min-w-px relative">
+                        <div className="content-stretch flex items-start px-[4px] py-[8px] relative size-full">
+                          <div className="[word-break:break-word] flex flex-col font-['Montserrat:Light',sans-serif] font-light justify-center leading-[0] relative shrink-0 text-[#606060] text-[14px] whitespace-nowrap">
+                            <p className="leading-[20px]">Buscar ítem</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="content-stretch flex h-[40px] items-center justify-center py-[12px] relative shrink-0">
-            <div className="overflow-clip relative shrink-0 size-[24px]">
-              <div className="absolute inset-[16.67%_0_15.81%_0]">
-                <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 24 16.2048">
-                  <path clipRule="evenodd" d={svgE1.p2ff2ec40} fill="#121E6C" fillRule="evenodd" />
-                  <path clipRule="evenodd" d={svgE1.p33334580} fill="#121E6C" fillRule="evenodd" />
-                  <path clipRule="evenodd" d={svgE1.p369c000} fill="#121E6C" fillRule="evenodd" />
-                  <path clipRule="evenodd" d={svgE1.p259bc880} fill="#121E6C" fillRule="evenodd" />
-                  <path clipRule="evenodd" d={svgE1.p2f036500} fill="#121E6C" fillRule="evenodd" />
-                  <path clipRule="evenodd" d={svgE1.p3848dc00} fill="#121E6C" fillRule="evenodd" />
-                </svg>
+              <div className="content-stretch flex h-[40px] items-center justify-center py-[12px] relative shrink-0">
+                <div className="overflow-clip relative shrink-0 size-[24px]">
+                  <div className="absolute inset-[16.67%_0_15.81%_0]">
+                    <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 24 16.2048">
+                      <path clipRule="evenodd" d={svgE1.p2ff2ec40} fill="#121E6C" fillRule="evenodd" />
+                      <path clipRule="evenodd" d={svgE1.p33334580} fill="#121E6C" fillRule="evenodd" />
+                      <path clipRule="evenodd" d={svgE1.p369c000} fill="#121E6C" fillRule="evenodd" />
+                      <path clipRule="evenodd" d={svgE1.p259bc880} fill="#121E6C" fillRule="evenodd" />
+                      <path clipRule="evenodd" d={svgE1.p2f036500} fill="#121E6C" fillRule="evenodd" />
+                      <path clipRule="evenodd" d={svgE1.p3848dc00} fill="#121E6C" fillRule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+                <div className="content-stretch flex items-center pl-[8px] relative rounded-[100px] shrink-0">
+                  <div className="[word-break:break-word] flex flex-col font-['Montserrat:Bold',sans-serif] font-bold justify-center leading-[0] relative shrink-0 text-[#121e6c] text-[12px] text-center whitespace-nowrap">
+                    <p className="[text-decoration-skip-ink:none] [text-underline-position:from-font] decoration-from-font decoration-solid leading-[16px] underline">Filtrar</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="content-stretch flex items-center pl-[8px] relative rounded-[100px] shrink-0">
-              <div className="[word-break:break-word] flex flex-col font-['Montserrat:Bold',sans-serif] font-bold justify-center leading-[0] relative shrink-0 text-[#121e6c] text-[12px] text-center whitespace-nowrap">
-                <p className="[text-decoration-skip-ink:none] [text-underline-position:from-font] decoration-from-font decoration-solid leading-[16px] underline">Filtrar</p>
-              </div>
-            </div>
           </div>
-        </div>
-      </div>
 
-      {/* Scrollable content */}
-      <div className="absolute left-0 top-[152px] bottom-[88px] w-full overflow-y-auto">
-        <div className="py-[12px]">
-          <div className="flex flex-col items-center gap-[12px] px-[16px]">
-            {/* Feedback card */}
-            <div className="bg-white content-stretch flex flex-col gap-[16px] items-start p-[16px] relative rounded-[16px] shrink-0 w-[343px]">
-              <div className="content-stretch flex gap-[8px] items-center relative shrink-0 w-full">
-                <div className="content-stretch flex flex-[1_0_0] flex-col gap-[16px] items-start min-w-px relative">
-                  <div className="[word-break:break-word] content-stretch flex flex-col gap-[8px] items-start relative shrink-0 text-[#1e1e1e] w-full">
-                    <div className="flex flex-col font-['Montserrat:Bold',sans-serif] font-bold justify-center leading-[0] relative shrink-0 text-[14px] w-full">
-                      <p className="leading-[20px]">{hasProducts ? "Cobra seleccionando tu producto" : "Crea un producto o servicio"}</p>
-                    </div>
-                    <p className="font-['Montserrat:Regular',sans-serif] font-normal leading-[16px] relative shrink-0 text-[12px] w-full">Cobra en segundos y visualiza los productos más vendidos</p>
-                  </div>
-                </div>
-                <PieChart label={hasProducts ? "2/2" : "1/2"} full={hasProducts} />
+          {/* Scrollable content */}
+          <div className="absolute left-0 top-[168px] bottom-[88px] w-full overflow-y-auto">
+            <div className="py-[12px]">
+              <div className="flex flex-col items-center gap-[12px] px-[16px]">
+                <CompactFeedbackCard
+                  hasProducts={hasProducts}
+                  onAction={hasProducts ? onContinueToCobro : onCreateProduct}
+                />
+                {products.map((p) => <ProductCard key={p.id} product={p} onClick={() => onViewProduct(p)} />)}
               </div>
-              <button
-                onClick={hasProducts ? onContinueToCobro : onCreateProduct}
-                className="bg-[#f1f2f6] relative rounded-[12px] shrink-0 w-full cursor-pointer"
-              >
-                <div className="flex flex-row items-center justify-center size-full">
-                  <div className="content-stretch flex gap-[8px] items-center justify-center px-[16px] py-[12px] relative size-full">
-                    <p className="[word-break:break-word] font-['Montserrat:Bold',sans-serif] font-bold leading-[20px] relative shrink-0 text-[#121e6c] text-[14px] text-center whitespace-nowrap">
-                      {hasProducts ? "Cobrar con mis productos" : "Crear producto o servicio"}
-                    </p>
+            </div>
+          </div>
+        </>
+      ) : (
+        /* Métricas tab — empty state */
+        <div className="absolute left-0 top-[112px] right-0 bottom-[88px] overflow-y-auto">
+          <div className="content-stretch flex flex-col gap-[56px] items-center justify-center relative shrink-0 w-full pt-[40px]">
+            <div className="grid-cols-[max-content] grid-rows-[max-content] inline-grid leading-[0] place-items-start relative shrink-0">
+              <div className="col-1 content-stretch flex flex-col gap-[24px] h-[221.122px] items-center justify-center ml-0 mt-0 relative row-1 w-[283px]">
+                <div className="relative shrink-0 size-[45px]">
+                  <div className="absolute inset-[9.5%_4.5%]">
+                    <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 40.9501 36.45">
+                      <path clipRule="evenodd" d={svgProds.p5e5b500} fill="#6C759F" fillRule="evenodd" />
+                      <path clipRule="evenodd" d={svgProds.p3833b980} fill="#6C759F" fillRule="evenodd" />
+                      <path clipRule="evenodd" d={svgProds.p24d3d880} fill="#6C759F" fillRule="evenodd" />
+                      <path clipRule="evenodd" d={svgProds.p369cfd80} fill="#6C759F" fillRule="evenodd" />
+                      <path clipRule="evenodd" d={svgProds.p280b900} fill="#6C759F" fillRule="evenodd" />
+                      <path clipRule="evenodd" d={svgProds.p39a98200} fill="#6C759F" fillRule="evenodd" />
+                    </svg>
                   </div>
                 </div>
-              </button>
+                <div className="grid-cols-[max-content] grid-rows-[max-content] inline-grid leading-[0] place-items-start relative shrink-0">
+                  <div className="col-1 content-stretch flex flex-col items-center justify-center ml-0 mt-0 relative row-1 w-[283px]">
+                    <p className="[word-break:break-word] font-['Montserrat:Regular',sans-serif] font-normal leading-[20px] relative shrink-0 text-[#1e1e1e] text-[14px] text-center w-full">Cuando vendas tus productos, verás aquí todos los datos relacionados con ellos.</p>
+                  </div>
+                </div>
+                <button
+                  onClick={onCreateProduct}
+                  className="[word-break:break-word] flex flex-col font-['Montserrat:Bold',sans-serif] font-bold justify-center leading-[0] relative shrink-0 text-[#121e6c] text-[12px] text-center w-[173px] cursor-pointer"
+                >
+                  <p className="[text-decoration-skip-ink:none] [text-underline-position:from-font] decoration-from-font decoration-solid leading-[16px] underline">Crear producto</p>
+                </button>
+              </div>
             </div>
-            {products.map((p) => <ProductCard key={p.id} product={p} onClick={() => onViewProduct(p)} />)}
           </div>
         </div>
-      </div>
+      )}
 
       {/* Bottom CTA */}
       <div className="absolute backdrop-blur-[1px] bottom-0 left-0 right-0 content-stretch flex flex-col items-center justify-center px-[16px] py-[20px]"
@@ -1533,31 +1589,10 @@ function CobroPage({
             <div className="flex flex-col gap-[12px] items-center px-[16px]">
 
               {/* Feedback card */}
-              <div className="bg-white content-stretch flex flex-col gap-[16px] items-start p-[16px] relative rounded-[16px] w-full max-w-[343px]">
-                <div className="content-stretch flex gap-[8px] items-center relative shrink-0 w-full">
-                  <div className="content-stretch flex flex-[1_0_0] flex-col gap-[16px] items-start min-w-px relative">
-                    <div className="[word-break:break-word] content-stretch flex flex-col gap-[8px] items-start relative shrink-0 text-[#1e1e1e] w-full">
-                      <div className="flex flex-col font-['Montserrat:Bold',sans-serif] font-bold justify-center leading-[0] relative shrink-0 text-[14px] w-full">
-                        <p className="leading-[20px]">{hasRealProducts ? "Cobra seleccionando tu producto" : "Crea un producto o servicio"}</p>
-                      </div>
-                      <p className="font-['Montserrat:Regular',sans-serif] font-normal leading-[16px] relative shrink-0 text-[12px] w-full">Cobra en segundos y visualiza los productos más vendidos</p>
-                    </div>
-                  </div>
-                  <PieChart label={hasRealProducts ? "2/2" : "1/2"} full={hasRealProducts} />
-                </div>
-                {!hasRealProducts && (
-                  <button
-                    onClick={onCreateProduct}
-                    className="bg-[#f1f2f6] relative rounded-[12px] shrink-0 w-full cursor-pointer"
-                  >
-                    <div className="flex flex-row items-center justify-center size-full">
-                      <div className="content-stretch flex gap-[8px] items-center justify-center px-[16px] py-[12px] relative size-full">
-                        <p className="[word-break:break-word] font-['Montserrat:Bold',sans-serif] font-bold leading-[20px] relative shrink-0 text-[#121e6c] text-[14px] text-center whitespace-nowrap">Crear producto o servicio</p>
-                      </div>
-                    </div>
-                  </button>
-                )}
-              </div>
+              <CompactFeedbackCard
+                hasProducts={hasRealProducts}
+                onAction={hasRealProducts ? onBack : onCreateProduct}
+              />
 
               {/* Lista de productos */}
               {filteredProducts.map(p => {
@@ -2551,7 +2586,7 @@ export default function App() {
   const [screen, setScreen] = useState<AppScreen>("home-payments");
   const [products, setProducts] = useState<Product[]>(SEED_PRODUCTS);
   const [cobroDefaultTab, setCobroDefaultTab] = useState<"monto" | "productos">("monto");
-  const [cobroBackScreen, setCobroBackScreen] = useState<AppScreen>("home-productos");
+  const [cobroBackScreen, setCobroBackScreen] = useState<AppScreen>("tus-productos");
   const [checkoutItems, setCheckoutItems] = useState<CheckoutItem[]>([]);
   const [showSuccess, setShowSuccess] = useState(false);
   const [celebrateFirst, setCelebrateFirst] = useState(false);
@@ -2629,7 +2664,7 @@ export default function App() {
       >
         {screen === "home-payments" && (
           <HomePaymentsPage
-            onProductosYServicios={() => setScreen("home-productos")}
+            onProductosYServicios={() => setScreen("tus-productos")}
             onCobrar={() => navigateToCobro("monto", "home-payments")}
           />
         )}
@@ -2645,7 +2680,7 @@ export default function App() {
         {screen === "tus-productos" && (
           <TusProductosPage
             products={products}
-            onBack={() => setScreen("home-productos")}
+            onBack={() => setScreen("home-payments")}
             onCreateProduct={goToCreate}
             onContinueToCobro={() => navigateToCobro("productos", "tus-productos")}
             onViewProduct={viewProduct}
@@ -2733,7 +2768,7 @@ export default function App() {
             items={checkoutItems}
             onNuevoCobro={() => {
               setCheckoutItems([]);
-              navigateToCobro("productos", "home-productos");
+              navigateToCobro("productos", "tus-productos");
             }}
           />
         )}
