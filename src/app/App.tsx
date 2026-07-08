@@ -1008,17 +1008,19 @@ function TusProductosPage({
         </div>
       )}
 
-      {/* Bottom CTA */}
-      <div className="absolute backdrop-blur-[1px] bottom-0 left-0 right-0 content-stretch flex flex-col items-center justify-center px-[16px] py-[20px]"
-        style={{ backgroundImage: "linear-gradient(0.584414deg, rgb(247,248,251) 35.923%, rgba(247,248,251,0) 98.003%)" }}>
-        <button onClick={onCreateProduct} className="bg-[#ff2947] h-[48px] relative rounded-[100px] shrink-0 w-full cursor-pointer">
-          <div className="flex flex-row items-center justify-center size-full">
-            <div className="content-stretch flex gap-[16px] items-center justify-center px-[16px] py-[12px] relative size-full">
-              <div className="[word-break:break-word] flex flex-col font-['Montserrat:Bold',sans-serif] font-bold justify-center leading-[0] relative shrink-0 text-[14px] text-center text-white whitespace-nowrap">
-                <p className="leading-[20px]">Crear producto o servicio</p>
-              </div>
-            </div>
-          </div>
+      {/* Bottom bar fija — Cobrar + Crear producto (nodo 28022-40045) */}
+      <div className="absolute bottom-0 left-0 right-0 flex items-center gap-[9px] border-t border-[#f1f2f6] bg-[#f7f8fb] px-[16px] py-[20px]">
+        <button
+          onClick={onContinueToCobro}
+          className="flex flex-1 h-[48px] items-center justify-center rounded-[100px] bg-white cursor-pointer"
+        >
+          <span className="font-['Montserrat:Bold',sans-serif] font-bold text-[14px] leading-[20px] text-[#ff2947] whitespace-nowrap">Cobrar</span>
+        </button>
+        <button
+          onClick={onCreateProduct}
+          className="flex flex-1 h-[48px] items-center justify-center rounded-[100px] bg-[#ff2947] cursor-pointer"
+        >
+          <span className="font-['Montserrat:Bold',sans-serif] font-bold text-[14px] leading-[20px] text-white whitespace-nowrap">Crear producto</span>
         </button>
       </div>
     </div>
